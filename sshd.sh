@@ -72,6 +72,11 @@ if [ -z "$LOCAL" -o "$LOCAL" == 0 ]; then
     sed -i "s;\#GatewayPorts no;GatewayPorts yes;g" $SDIR/sshd_config
 fi
 
+# Allow root login if a password was set.
+if [ -n "${PASSWORD}" ]; then
+    sed -i "s;\#PermitRootLogin .*;PermitRootLogin yes;g" $SDIR/sshd_config
+fi
+
 # Fix permissions and access to the .ssh directory (in case it was shared with
 # the host)
 chown root $HOME/.ssh
