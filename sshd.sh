@@ -71,7 +71,6 @@ fi
 if [ -z "$LOCAL" -o "$LOCAL" == 0 ]; then
     sed -i "s;\GatewayPorts no;GatewayPorts yes;g" $SDIR/sshd_config
     sed -i "s;\AllowTcpForwarding no;AllowTcpForwarding yes;g" $SDIR/sshd_config
-    sed -i "s;\#AllowAgentForwarding ;AllowAgentForwarding ;g" $SDIR/sshd_config
 fi
 
 # Allow root login if a password was set.
