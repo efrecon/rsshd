@@ -1,16 +1,20 @@
-FROM alpine:3.9
+FROM alpine:3
 MAINTAINER Emmanuel Frecon <efrecon@gmail.com>
 
-RUN apk --update add openssh
+RUN apk add --no-cache openssh-server-pam &&\
+    addgroup -S autossh && \
+    adduser -D -s /bin/true -G autossh autossh && \
+    mkdir -p /home/autossh/.ssh && \
+    chown -R autossh:autossh /home/autossh/ && \
+    chmod 700 /home/autossh/.ssh
+
 COPY sshd.sh /usr/local/bin/
 
 # Expose the regular ssh port
 EXPOSE 22
 EXPOSE 10000-10100
 
-# To set the password of the root user (Alpine has no password per
-# default!) use the following variable.  Otherwise, a password will
-# be generated and output in the log.
+# To set the password of the root user and activate the SSH root login
 # ENV PASSWORD="xxx"
 
 # You can modify the (internal) location to store the host keys
@@ -28,7 +32,6 @@ EXPOSE 10000-10100
 VOLUME /etc/ssh/keys
 
 # Where to store the list of authorised clients (good for restarts)
-VOLUME /root/.ssh
-
+VOLUME /home/autossh/.ssh
 
 ENTRYPOINT /usr/local/bin/sshd.sh
