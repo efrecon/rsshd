@@ -1,4 +1,4 @@
-FROM alpine:3.16.3
+FROM alpine:3.18.4
 LABEL org.opencontainers.image.authors="Emmanuel Frecon <efrecon@gmail.com>"
 
 RUN apk --update add openssh

@@ -9,7 +9,7 @@ SDIR=/etc/ssh
 # Make sure we have a root password, since Alpine does not have a root
 # password by default and we want to have this minimal level of security
 if [ -z "$PASSWORD" ]; then
-    PASSWORD=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c8)
+    PASSWORD=$(< /dev/urandom tr -dc A-Z-a-z-0-9 | head -c32)
     echo "==========="
     echo "== Root Password is $PASSWORD"
     echo "==========="
