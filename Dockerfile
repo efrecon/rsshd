@@ -31,4 +31,4 @@ VOLUME /etc/ssh/keys
 VOLUME /root/.ssh
 
 
-ENTRYPOINT /usr/local/bin/sshd.sh
+ENTRYPOINT [ "/usr/local/bin/sshd.sh" ]
