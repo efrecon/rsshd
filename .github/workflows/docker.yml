@@ -69,7 +69,7 @@ jobs:
       - name: Delete old SHA images
         uses: actions/delete-package-versions@v5
         with:
-          package-name: ${{ github.repository }}
+          package-name: rsshd
           package-type: 'container'
           min-versions-to-keep: 5
           delete-only-untagged-versions: 'true'
