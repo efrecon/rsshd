@@ -23,7 +23,7 @@ Let's take a real life example to kickstart the description:
     -p 10000-10100:10000-10100 \
     -v /opt/keys/host:/etc/ssh/keys \
     -v /opt/keys/clients:/home/autossh/.ssh \
-      efrecon/rsshd
+      ghcr.io/efrecon/rsshd
 ```
 
 This example would:
@@ -40,8 +40,14 @@ This example would:
   but you will probably want to replace the options `-it --rm` with,
   at least `-d` and even perhaps `-d --restart=always` to make sure your remote servers can always connect.
 
+> [!NOTE]
+> A prior version of this container used `root` inside the container.
+> This [version] is still available as a [container][1.0].
+
   [connect]: https://www.raspberrypi.com/software/connect/
   [Alpine]: http://www.alpinelinux.org/
+  [version]: https://github.com/efrecon/rsshd/releases/tag/v1.0.0
+  [1.0]: https://github.com/efrecon/rsshd/pkgs/container/rsshd/623365416?tag=1.0
 
 ## Connecting from remote servers
 
