@@ -14,9 +14,9 @@ COPY --chmod=755 *.sh /usr/local/bin/
 EXPOSE 22
 EXPOSE 10000-10100
 
-# When password is set to "-", the user will be autossh with no login. When
-# password is set, this will be the password for the autossh user. When empty, a
-# password will be generated and set for the user.
+# When password is set to "-", the user will be the autossh user with no login.
+# When password is set, it will be used as the password for the autossh user.
+# When empty, a password will be generated and set for the autossh user.
 # ENV AUTOSSH_PASSWORD="-"
 
 # You can modify the (internal) location to store the host keys

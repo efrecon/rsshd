@@ -103,12 +103,15 @@ add_config() {
 # Point AUTOSSH_CONFIG to a file that is included from the main sshd_config and
 # using the proper extension.
 cf_glob=$(grep '^Include' "$AUTOSSH_SSHD_CONFIG" |head -n 1|awk '{print $2}')
+[ -z "$cf_glob" ] && error "Could not find Include directive in %s" "$AUTOSSH_SSHD_CONFIG"
 CF_DIR=$(dirname "$cf_glob") # Directory of the included config files
+[ ! -d "$CF_DIR" ] && error "Included config directory %s does not exist" "$CF_DIR"
 CF_EXT=$(basename "$cf_glob"|sed 's;.*\.;;') # Extension of the included config files, no leading dot
+[ -z "$CF_EXT" ] && error "Could not determine included config file extension from %s" "$cf_glob"
+trace "Using included config directory %s and extension %s" "$CF_DIR" "$CF_EXT"
 AUTOSSH_CONFIG="${CF_DIR%%/}/autossh.${CF_EXT}"
 
-
-# Arrange for the SSSHd loglevel to follow our verbosity setting
+# Arrange for the SSHd loglevel to follow our verbosity setting
 case "$AUTOSSH_VERBOSE" in
   0) info "Setting SSHd LogLevel to INFO"; add_config "LogLevel" "INFO" ;;
   1) info "Setting SSHd LogLevel to VERBOSE"; add_config "LogLevel" "VERBOSE" ;;
@@ -120,7 +123,7 @@ esac
 # When set to "-", disable login for the user.
 if [ "$AUTOSSH_PASSWORD" = "-" ]; then
   info "Disabling login for autossh user"
-  sed -iE "s;^autossh:x:.*;autossh:x:$(id -u autossh):$(id -g autossh):autossh:/home/autossh:/sbin/nologin;g" /etc/passwd
+  sed -i -E "s;^autossh:x:.*;autossh:x:$(id -u autossh):$(id -g autossh):autossh:/home/autossh:/sbin/nologin;g" /etc/passwd
   add_config "PasswordAuthentication" "no"
 else
   if [ -z "$AUTOSSH_PASSWORD" ]; then
@@ -189,4 +192,4 @@ add_config "UsePAM" "yes"
 
 # Absolute path necessary! Pass all remaining arguments to sshd. This enables to
 # override some options through -o, for example.
-exec "$AUTOSSH_SSHD_BIN" -f "$AUTOSSH_CONFIG" -D -e "$@"
+exec "$AUTOSSH_SSHD_BIN" -f "$AUTOSSH_SSHD_CONFIG" -D -e "$@"

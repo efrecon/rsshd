@@ -28,15 +28,15 @@ Let's take a real life example to kickstart the description:
 
 This example would:
 
-* Start a container listening for incoming ssh connections on port `2222`.
-* Be able to accept 101 clients, through exposing ports `10000` to `10100`.
+- Start a container listening for incoming ssh connections on port `2222`.
+- Be able to accept 101 clients, through exposing ports `10000` to `10100`.
   These will be the ports to which you will direct ssh connection on the host once everything is setup.
-* Mount the host keys onto the `/opt/keys/host` on the host computer.
+- Mount the host keys onto the `/opt/keys/host` on the host computer.
   This enables to keep the same keys at every restart of the container.
   The keys are generated if they do not exist whenever the container is started.
-* Mount the list of authorised clients (your servers!) in the host directory at `/opt/keys/clients`,
-  to pertain on restarts.
-* The command runs in interactive mode,
+- Mount the list of authorised clients (your servers!) in the host directory at `/opt/keys/clients`,
+  to persist across restarts.
+- The command runs in interactive mode,
   but you will probably want to replace the options `-it --rm` with,
   at least `-d` and even perhaps `-d --restart=always` to make sure your remote servers can always connect.
 
@@ -131,3 +131,9 @@ from within, issue commands such as:
 
 This provides complete encapsulation, at the expense of another layer of
 "jumping" whenever you need to access your servers.
+
+## TODO
+
+- [ ] Should we set `MaxSessions` to `0` to just enable forwarding?
+- [ ] Should we restrict further by setting `AuthenticationMethods` to
+  `publickey`.
