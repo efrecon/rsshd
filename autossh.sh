@@ -123,7 +123,7 @@ esac
 # When set to "-", disable login for the user.
 if [ "$AUTOSSH_PASSWORD" = "-" ]; then
   info "Disabling login for autossh user"
-  sed -i -E "s;^autossh:x:.*;autossh:x:$(id -u autossh):$(id -g autossh):autossh:/home/autossh:/sbin/nologin;g" /etc/passwd
+  sed -i "s;^autossh:x:.*;autossh:x:$(id -u autossh):$(id -g autossh):autossh:/home/autossh:/sbin/nologin;g" /etc/passwd
   add_config "PasswordAuthentication" "no"
 else
   if [ -z "$AUTOSSH_PASSWORD" ]; then
