@@ -1,4 +1,4 @@
-FROM alpine:3.23
+FROM alpine:3.24
 LABEL org.opencontainers.image.authors="Emmanuel Frecon <efrecon+github@gmail.com>"
 
 RUN apk --no-cache add openssh-server-pam && \
